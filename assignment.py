@@ -61,7 +61,6 @@ def calc_scalar(data):
     for i in data:
         scalar = float(i["price"]) / float(i["block"])
         i["scalar"] = round(scalar,2)
-        print(i)
         del i["price"]
     return data
 
