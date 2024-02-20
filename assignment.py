@@ -59,8 +59,8 @@ def calc_scalar(data):
     calculates energy scalar
     """
     for i in data:
-        scalar = str(float(i["price"]) / float(i["block"]))
-        i["scalar"] = scalar[: scalar.index(".") + 3]
+        scalar = float(i["price"]) / float(i["block"])
+        i["scalar"] = round(scalar,2)
         print(i)
         del i["price"]
     return data
@@ -76,8 +76,8 @@ def to_monthly(data):
             dicn[i["date"][11:]] = []
         dicn[i["date"][11:]].append(float(i["price"]))
     for j in dicn:
-        avg = str(sum(dicn[j]) / len(dicn[j]))
-        dicn[j] = avg[: avg.index(".") + 3]
+        avg = sum(dicn[j]) / len(dicn[j])
+        dicn[j] = round(avg,2)
     return dicn
 
 
@@ -102,13 +102,13 @@ def answer():
         for j in monthwise:
             if j["month"] == i:
                 months.append(j)
-        month_peak = str(calc_peak(months))
-        month_off_peak = str(calc_off_peak(months))
+        month_peak = calc_peak(months)
+        month_off_peak = calc_off_peak(months)
         for k in months:
             if int(k["time"][:2]) in range(6, 22):
-                k["block"] = month_peak[: month_peak.index(".") + 3]
+                k["block"] = round(month_peak,2)
             else:
-                k["block"] = month_off_peak[: month_off_peak.index(".") + 3]
+                k["block"] = round(month_off_peak,2)
         block_data.extend(months)
 
     data = calc_scalar(block_data)
